@@ -37,8 +37,6 @@ public class Airplane : MonoBehaviour
                 Debug.Log("ship attacked, -100 life");
             }
 
-            //animator.SetBool("isHit", false);
-
             if (life < 0)
             {
                 Debug.Log("ship destroyed successfully");

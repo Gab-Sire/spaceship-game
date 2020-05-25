@@ -15,6 +15,17 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Destroy(gameObject);
+        if (collider.tag.Contains("enemy") || collider.tag.Contains("wall"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag.Contains("enemy") || collider.tag.Contains("wall"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
