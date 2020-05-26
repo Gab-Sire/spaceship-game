@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class MissileLauncher : MonoBehaviour
 {
-
     public GameObject missilePrefab;
     Transform firePoint;
+    public static Transform target;
+    private Collider selectedCollider;
+    private GameObject missile;
 
     void Start()
     {
-        firePoint = GetComponent<Transform>();    
+        firePoint = GetComponent<Transform>();  
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetMouseButtonDown(0))
         {
-            /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Vector3 point = ray.origin + (ray.direction *);
-            Debug.Log("World point " + point);*/
-
-            GameObject missile = Instantiate(missilePrefab, firePoint.transform.position, transform.rotation);
-            missile.GetComponent<Missile>().target = GameObject.Find("target").transform;
+            if (target != null && missile == null)
+            {
+                Debug.Log("instantiating missile");
+                missile = Instantiate(missilePrefab, firePoint.transform.position, transform.rotation);
+                missile.GetComponent<Missile>().target = target;
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ public class MachineGun : MonoBehaviour
 {
     public float rotateSpeed = 5f;
     public GameObject bulletPrefab;
-    public Transform[] firePoints;
+    public Transform firePoint;
 
     void Start()
     {
@@ -28,10 +28,7 @@ public class MachineGun : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.Z))
         {
-            foreach (Transform firePoint in firePoints)
-            {
-                Instantiate(bulletPrefab, firePoint.transform.position, transform.rotation);
-            }
+            Instantiate(bulletPrefab, firePoint.transform.position, transform.rotation);
         }
     }
 }

@@ -20,12 +20,4 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.tag.Contains("enemy") || collider.tag.Contains("wall"))
-        {
-            Destroy(gameObject);
-        }
-    }
 }

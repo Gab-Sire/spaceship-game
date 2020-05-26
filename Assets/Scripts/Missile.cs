@@ -22,4 +22,13 @@ public class Missile : MonoBehaviour
         rigidbody2D.angularVelocity = -rotateAmount * rotateSpeed;
         rigidbody2D.velocity = transform.right * speed;
     }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag.Equals("enemy"))
+        {
+            MissileLauncher.target = null;
+            Destroy(gameObject);
+        }
+    }
 }
