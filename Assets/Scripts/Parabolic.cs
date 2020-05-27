@@ -1,16 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Parabolic : MonoBehaviour
 {
     public float life = 200;
+    public float moveSpeed = 10.0f;
+    LevelManager levelManager;
+    public short scoreReward = 25;
+    Rigidbody2D rigidbody2D;
     Animator[] animators;
     BoxCollider[] boxColliders;
+    bool isDead = false;
 
     void Start()
     {
+        levelManager = FindObjectOfType<LevelManager>();
         animators = GetComponentsInChildren<Animator>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D.velocity = -transform.right * moveSpeed;
     }
 
     void Update()
@@ -42,12 +48,22 @@ public class Parabolic : MonoBehaviour
                     life -= 100;
                 }
 
-                if (life < 0)
+                if (life < 0 && !isDead)
                 {
                     Debug.Log("ship destroyed successfully");
+                    LevelManager.UpdateScore(scoreReward);
+                    isDead = true;
                     Destroy(gameObject);
                 }
             }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag.Contains("Wall_left"))
+        {
+            Destroy(gameObject);
         }
     }
 

@@ -6,6 +6,7 @@ public class PlayerComponent : MonoBehaviour
 {
     Animator[] animators;
     public int life = 500;
+    public bool isDead = false;
 
     void Start()
     {
@@ -37,6 +38,7 @@ public class PlayerComponent : MonoBehaviour
                 if (life < 0)
                 {
                     Debug.Log("component destroyed successfully");
+                    isDead = true;
                     Destroy(gameObject);
                 }
             }
