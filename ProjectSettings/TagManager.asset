@@ -10,6 +10,7 @@ TagManager:
   - player
   - projectile_enemy
   - projectile_player
+  - skyscraper
   layers:
   - Default
   - TransparentFX

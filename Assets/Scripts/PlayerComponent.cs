@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerComponent : MonoBehaviour
 {
+    LevelManager levelManager;
     Animator[] animators;
     public int life = 500;
     public bool isDead = false;
+    public AudioSource audioSrc;
 
     void Start()
     {
         animators = GetComponentsInChildren<Animator>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void Update()
@@ -29,16 +30,22 @@ public class PlayerComponent : MonoBehaviour
     {
         if (collider.gameObject.tag.Contains("projectile_enemy"))
         {
+            if (audioSrc != null)
+            {
+                audioSrc.Play();
+            }
+            
             life -= 50;
 
             foreach (Animator animator in animators)
             {
                 animator.SetBool("isHit", true);
 
-                if (life < 0)
+                if (life < 0 && !isDead)
                 {
-                    Debug.Log("component destroyed successfully");
+                    //Debug.Log("component destroyed successfully");
                     isDead = true;
+                    levelManager.PlayerComponentKilled();
                     Destroy(gameObject);
                 }
             }

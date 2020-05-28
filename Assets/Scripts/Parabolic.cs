@@ -50,7 +50,7 @@ public class Parabolic : MonoBehaviour
 
                 if (life < 0 && !isDead)
                 {
-                    Debug.Log("ship destroyed successfully");
+                    //Debug.Log("ship destroyed successfully");
                     LevelManager.UpdateScore(scoreReward);
                     isDead = true;
                     Destroy(gameObject);

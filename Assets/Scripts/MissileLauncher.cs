@@ -19,7 +19,7 @@ public class MissileLauncher : MonoBehaviour
         {
             if (target != null && missile == null)
             {
-                Debug.Log("instantiating missile");
+                //Debug.Log("instantiating missile");
                 missile = Instantiate(missilePrefab, firePoint.transform.position, transform.rotation);
                 missile.GetComponent<Missile>().target = target;
             }
