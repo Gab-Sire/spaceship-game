@@ -2,9 +2,12 @@
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
     public float moveSpeed = 3f;
+    [SerializeField]
     public float maxSpeed = 3f;
-    Rigidbody2D rigidbody2D;
+    [SerializeField]
+    new Rigidbody2D rigidbody2D;
    
     void Start()
     {

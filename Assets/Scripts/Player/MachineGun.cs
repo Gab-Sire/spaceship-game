@@ -2,11 +2,16 @@
 
 public class MachineGun : MonoBehaviour
 {
-    public float rotateSpeed = 5f;
-    public float delayNextShooting = 0.01f;
-    public GameObject bulletPrefab;
-    public Transform firePoint;
-    public AudioSource audioSrc;
+    [SerializeField]
+    float rotateSpeed = 5f;
+    [SerializeField]
+    float delayNextShooting = 0.01f;
+    [SerializeField]
+    GameObject bulletPrefab = default;
+    [SerializeField]
+    Transform firePoint = default;
+    [SerializeField]
+    AudioSource audioSrc = default;
 
     float nextFireTime = 0.0f;
 

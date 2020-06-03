@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8094765186876434388}
   m_Layer: 0
   m_Name: Skyscrapers
-  m_TagString: Untagged
+  m_TagString: skyscraper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5329559684407445551}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 280.24066}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4, y: 2.6}
+  m_AnchoredPosition: {x: -9.826406, y: -0.21649456}
   m_SizeDelta: {x: 10.24, y: 7.68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &5329559684407445550

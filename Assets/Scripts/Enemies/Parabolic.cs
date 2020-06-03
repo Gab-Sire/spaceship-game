@@ -2,26 +2,29 @@
 
 public class Parabolic : MonoBehaviour
 {
-    public float life = 200;
-    public float moveSpeed = 10.0f;
+    [SerializeField]
+    float life = 200;
+    [SerializeField]
+    float moveSpeed = 10.0f;
+    [SerializeField]
+    short scoreReward = 25;
+
     LevelManager levelManager;
-    public short scoreReward = 25;
-    Rigidbody2D rigidbody2D;
+    new Rigidbody2D rigidbody2D;
     Animator[] animators;
     BoxCollider[] boxColliders;
     bool isDead = false;
 
     void Start()
     {
-        levelManager = FindObjectOfType<LevelManager>();
         animators = GetComponentsInChildren<Animator>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.velocity = -transform.right * moveSpeed;
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void Update()
     {
-
         foreach (Animator animator in animators)
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("hit"))
@@ -33,7 +36,7 @@ public class Parabolic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag.Contains("projectile_player"))
+        if (collider.CompareTag("projectile_player"))
         {
             foreach (Animator animator in animators)
             {
@@ -50,10 +53,10 @@ public class Parabolic : MonoBehaviour
 
                 if (life < 0 && !isDead)
                 {
-                    //Debug.Log("ship destroyed successfully");
-                    LevelManager.UpdateScore(scoreReward);
+                    Debug.Log("parabolic destroyed successfully", gameObject);
+                    levelManager.UpdateScore(scoreReward);
                     isDead = true;
-                    Destroy(gameObject);
+                    Destroy(gameObject, 0.1f);
                 }
             }
         }
@@ -61,9 +64,9 @@ public class Parabolic : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.gameObject.tag.Contains("Wall_left"))
+        if (collider.gameObject.name.Equals("Wall_left"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 1.0f);
         }
     }
 
@@ -73,6 +76,5 @@ public class Parabolic : MonoBehaviour
         {
             MissileLauncher.target = transform;
         }
-
     }
 }

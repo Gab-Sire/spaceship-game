@@ -2,10 +2,12 @@
 
 public class Missile : MonoBehaviour
 {
-    private Rigidbody2D rigidbody2D;
-    public float speed = 10f;
+    new Rigidbody2D rigidbody2D;
+    [SerializeField]
+    float speed = 10f;
+    [SerializeField]
     public float rotateSpeed = 100f;
-    public Transform target;
+    public Transform target { get; set; }
 
     void Start()
     {
@@ -23,10 +25,10 @@ public class Missile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag.Equals("enemy"))
+        if (collider.CompareTag("enemy"))
         {
             MissileLauncher.target = null;
-            Destroy(gameObject);
+            Destroy(gameObject, 0.1f);
         }
     }
 }

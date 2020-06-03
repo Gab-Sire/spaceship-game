@@ -2,16 +2,20 @@
 
 public class PlayerComponent : MonoBehaviour
 {
-    LevelManager levelManager;
-    Animator[] animators;
+    [SerializeField]
+    LevelManager levelManager = default;
+    [SerializeField]
     public int life = 500;
+    [SerializeField]
     public bool isDead = false;
+    [SerializeField]
     public AudioSource audioSrc;
 
+    Animator[] animators;
+    
     void Start()
     {
         animators = GetComponentsInChildren<Animator>();
-        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void Update()
@@ -28,7 +32,7 @@ public class PlayerComponent : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag.Contains("projectile_enemy"))
+        if (collider.CompareTag("projectile_enemy"))
         {
             if (audioSrc != null)
             {
@@ -43,7 +47,7 @@ public class PlayerComponent : MonoBehaviour
 
                 if (life < 0 && !isDead)
                 {
-                    //Debug.Log("component destroyed successfully");
+                    Debug.Log("component destroyed successfully", gameObject);
                     isDead = true;
                     levelManager.PlayerComponentKilled();
                     Destroy(gameObject);

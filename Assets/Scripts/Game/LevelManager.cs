@@ -1,34 +1,42 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
-    public GameObject scoreIndicator;
-    public GameObject finalScoreIndicator;
-    public GameObject gameOverPanel;
-    public GameObject airplanePrefab;
-    public GameObject parabolicPrefab;
-    public GameObject skyscrapersPrefab;
-    public Transform[] spawnPoints;
-    public Transform parabolicSpawnPoint;
+    [SerializeField]
+    GameObject scoreIndicator = default;
+    [SerializeField]
+    GameObject finalScoreIndicator = default;
+    [SerializeField]
+    GameObject gameOverPanel = default;
+    [SerializeField]
+    GameObject airplanePrefab = default;
+    [SerializeField]
+    GameObject parabolicPrefab = default;
+    [SerializeField]
+    GameObject skyscrapersPrefab = default;
+    [SerializeField]
+    Transform[] spawnPoints = default;
+    [SerializeField]
+    Transform parabolicSpawnPoint = default;
 
-    private RectTransform rectTransform;
-    private GameObject[] skyscrapers;
-    private static TMPro.TextMeshProUGUI scoreText;
-    private static TMPro.TextMeshProUGUI finalScoreText;
-    private static int remainingEnemiesFromWave;
-    private static int wave = 0;
-    private static float timer = 0;
-    private static int playerComponentsFunctioning;
-    public static bool isGameOver = false;
+    RectTransform rectTransform;
+    GameObject[] skyscrapers;
+    TextMeshProUGUI scoreText;
+    TextMeshProUGUI finalScoreText;
+    static int remainingEnemiesFromWave;
+    static int wave = 0;
+    static float timer = 6.0f;
+    static int playerComponentsFunctioning;
+    static bool isGameOver = false;
 
     void Start()
     {
         playerComponentsFunctioning = 4;
-        scoreText = scoreIndicator.GetComponent<TMPro.TextMeshProUGUI>();
-        finalScoreText = finalScoreIndicator.GetComponent<TMPro.TextMeshProUGUI>();
+        scoreText = scoreIndicator.GetComponent<TextMeshProUGUI>();
+        finalScoreText = finalScoreIndicator.GetComponent<TextMeshProUGUI>();
         scoreText.text = "00000";
         finalScoreText.text = "00000";
         skyscrapers = GameObject.FindGameObjectsWithTag("skyscraper");
@@ -40,10 +48,14 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-
+        if (Time.time > timer)
+        {
+            timer = Time.time + 6.0f;
+            StartCoroutine("CreateNewParabolic");
+        }
     }
 
-    public static void UpdateScore(int score)
+    public void UpdateScore(int score)
     {
         scoreText.text = (short.Parse(scoreText.text) + score + "").PadLeft(5, '0');
         finalScoreText.text = (short.Parse(finalScoreText.text) + score + "").PadLeft(5, '0');
@@ -52,7 +64,7 @@ public class LevelManager : MonoBehaviour
     public void UpdateRemainingEnemiesFromWave(int deaths)
     {
         remainingEnemiesFromWave -= deaths;
-        //Debug.Log("remaining enemies after death: " + remainingEnemiesFromWave);
+        Debug.Log("remaining enemies after death: " + remainingEnemiesFromWave);
 
         if (remainingEnemiesFromWave <= 0)
         {
@@ -92,7 +104,7 @@ public class LevelManager : MonoBehaviour
         else if (wave >= 7)
         {
             int enemiesToSpawn = Random.Range(3, 5);
-            //Debug.Log("enemies spawned: " + enemiesToSpawn);
+            Debug.Log("enemies spawned: " + enemiesToSpawn);
             remainingEnemiesFromWave += enemiesToSpawn;
 
             for (int i = 0; i < enemiesToSpawn; i++)
@@ -101,17 +113,14 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        //Debug.Log("remaining enemies after created wave: " + remainingEnemiesFromWave);
+        Debug.Log("remaining enemies after created wave: " + remainingEnemiesFromWave);
         wave++;
     }
 
     IEnumerator CreateNewParabolic()
     {
-        while (true)
-        {
-            Instantiate(parabolicPrefab, parabolicSpawnPoint.transform.position, parabolicSpawnPoint.transform.rotation);
-            yield return new WaitForSeconds(6.0f);
-        }
+        Instantiate(parabolicPrefab, parabolicSpawnPoint.transform.position, parabolicSpawnPoint.transform.rotation);
+        yield return new WaitForSeconds(6.0f);
     }
 
     public void LoopSkyscrapers()

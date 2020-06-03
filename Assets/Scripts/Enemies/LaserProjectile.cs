@@ -2,8 +2,9 @@
 
 public class LaserProjectile : MonoBehaviour
 {
-    private Rigidbody2D rigidbody2D;
-    public float speed = 10f;
+    new Rigidbody2D rigidbody2D;
+    [SerializeField]
+    float speed = 10f;
 
     void Start()
     {
@@ -18,9 +19,9 @@ public class LaserProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag.Contains("player") || collider.tag.Contains("wall"))
+        if (collider.CompareTag("player") || collider.CompareTag("wall"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 0.5f);
         }
     }
 }

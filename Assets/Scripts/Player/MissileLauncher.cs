@@ -2,11 +2,13 @@
 
 public class MissileLauncher : MonoBehaviour
 {
-    public GameObject missilePrefab;
-    Transform firePoint;
+    [SerializeField]
+    public GameObject missilePrefab = default;
+    [SerializeField]
+    Transform firePoint = default;
     public static Transform target;
-    private Collider selectedCollider;
-    private GameObject missile;
+
+    GameObject missile;
 
     void Start()
     {
@@ -19,7 +21,7 @@ public class MissileLauncher : MonoBehaviour
         {
             if (target != null && missile == null)
             {
-                //Debug.Log("instantiating missile");
+                Debug.Log("instantiating missile");
                 missile = Instantiate(missilePrefab, firePoint.transform.position, transform.rotation);
                 missile.GetComponent<Missile>().target = target;
             }

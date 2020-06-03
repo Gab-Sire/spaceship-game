@@ -2,28 +2,36 @@
 
 public class Airplane : MonoBehaviour
 {
-    public float life = 100;
-    public float moveSpeed = 3.0f;
-    public float delayNextShooting = 0.5f;
-    public Transform firePoint;
-    public GameObject laserProjectilePrefab;
-    public bool isAbleToShoot = true;
-    public short scoreReward = 50;
-    public AudioSource audioSrc;
+    [SerializeField]
+    float life = 100;
+    [SerializeField]
+    float moveSpeed = 3.0f;
+    [SerializeField]
+    float delayNextShooting = 0.5f;
+    [SerializeField]
+    Transform firePoint = default;
+    [SerializeField]
+    GameObject laserProjectilePrefab = default;
+    [SerializeField]
+    bool isAbleToShoot = true;
+    [SerializeField]
+    short scoreReward = 50;
+    [SerializeField]
+    AudioSource audioSrc = default;
 
     GameObject player;
     LevelManager levelManager;
     PlayerComponent[] playerComponents;
     BoxCollider2D[] playerBoxColliders;
     Animator animator;
+    Vector2 screenBounds;
+
     float nextFireTime = 0.0f;
     float nextMoveTime = 0.0f;
+    float height;
     bool isDead = false;
     bool hasSpawned = true;
-    private Vector2 screenBounds;
-    private float height;
-
-
+    
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -67,7 +75,6 @@ public class Airplane : MonoBehaviour
         if (Time.time > nextMoveTime)
         {
             nextMoveTime = Time.time + 1f;
-
             int moveResult = Random.Range(0, 2);
 
             if (moveResult == 0 && (transform.position.y + height / 2) < screenBounds.y)
@@ -90,32 +97,31 @@ public class Airplane : MonoBehaviour
             if (collider.gameObject.name.Contains("Bullet"))
             {
                 life -= 10;
-                //Debug.Log("ship attacked, -10 life");
             }
             else if (collider.gameObject.name.Contains("Missile"))
             {
                 life -= 100;
-                //Debug.Log("ship attacked, -100 life");
             }
+
+            Debug.Log("ship attacked", gameObject);
 
             if (life < 0 && !isDead)
             {
-                //Debug.Log("ship destroyed successfully");
+                Debug.Log("ship destroyed successfully", gameObject);
                 isDead = true;
                 levelManager.UpdateRemainingEnemiesFromWave(1);
-                LevelManager.UpdateScore(scoreReward);
-                Destroy(gameObject);
+                levelManager.UpdateScore(scoreReward);
+                Destroy(gameObject, 0.1f);
             }
         }
     }
 
     void Shoot()
     {
-        if (!levelManager.IsGameOver())
+        if (audioSrc != null && !levelManager.IsGameOver())
         {
             audioSrc.Play();
         }
-        
         Instantiate(laserProjectilePrefab, firePoint.transform.position, transform.rotation);
     }
 
