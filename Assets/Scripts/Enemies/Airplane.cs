@@ -5,7 +5,7 @@ public class Airplane : MonoBehaviour
     [SerializeField]
     float life = 100;
     [SerializeField]
-    float moveSpeed = 3.0f;
+    float spawnMoveSpeed = 8.0f;
     [SerializeField]
     float delayNextShooting = 0.5f;
     [SerializeField]
@@ -30,7 +30,9 @@ public class Airplane : MonoBehaviour
     float nextMoveTime = 0.0f;
     float height;
     bool isDead = false;
-    bool hasSpawned = true;
+    bool hasSpawned = false;
+    bool movingUp;
+    int moveCycle = 0;
     
     void Start()
     {
@@ -45,13 +47,13 @@ public class Airplane : MonoBehaviour
 
     void Update()
     {
-        if (hasSpawned && transform.position.x > 22)
+        if (!hasSpawned && transform.position.x > 22)
         {
-            transform.position -= new Vector3(moveSpeed, 0, 0) * Time.deltaTime;
+            transform.position -= new Vector3(spawnMoveSpeed, 0, 0) * Time.deltaTime;
         }
-        else if (hasSpawned && transform.position.x <= 22)
+        else if (!hasSpawned && transform.position.x <= 22)
         {
-            hasSpawned = false;
+            hasSpawned = true;
         }
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("hit"))
@@ -59,7 +61,7 @@ public class Airplane : MonoBehaviour
             animator.SetBool("isHit", false);
         }
 
-        if (isAbleToShoot && !hasSpawned)
+        if (isAbleToShoot && hasSpawned)
         {
             if (Time.time > nextFireTime)
             {
@@ -67,25 +69,44 @@ public class Airplane : MonoBehaviour
                 Shoot();
             }
         }
+
+        if (hasSpawned)
+        {
+            if (moveCycle == 0)
+            {
+                movingUp = (Random.value < 0.5f);
+            }
+
+            if (movingUp && (transform.position.y + height / 2) < screenBounds.y)
+            {
+                transform.position += Vector3.up * 0.05f;
+                moveCycle = ++moveCycle % 40;
+            }
+            else if (!movingUp && (transform.position.y - height / 2) > -screenBounds.y)
+            {
+                transform.position -= Vector3.up * 0.05f;
+                moveCycle = ++moveCycle % 40;
+            }
+            else
+            {
+                if (movingUp)
+                {
+                    transform.position -= Vector3.up * 0.05f;
+                    moveCycle = ++moveCycle % 40;
+                }
+                else
+                {
+                    transform.position += Vector3.up * 0.05f;
+                    moveCycle = ++moveCycle % 40;
+                }
+            }
+        }
     }
 
     void FixedUpdate()
     {
 
-        if (Time.time > nextMoveTime)
-        {
-            nextMoveTime = Time.time + 1f;
-            int moveResult = Random.Range(0, 2);
-
-            if (moveResult == 0 && (transform.position.y + height / 2) < screenBounds.y)
-            {
-                transform.position += new Vector3(0, 1, 0);
-            }
-            else if (moveResult == 1 && (transform.position.y - height / 2) > -screenBounds.y)
-            {
-                transform.position += new Vector3(0, -1, 0);
-            }
-        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

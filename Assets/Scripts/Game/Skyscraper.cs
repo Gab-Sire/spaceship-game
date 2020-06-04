@@ -26,7 +26,7 @@ public class Skyscraper : MonoBehaviour
         if (collider.gameObject.name.Equals("Wall_left"))
         {
             levelManager.LoopSkyscrapers();
-            Destroy(gameObject, 1.0f);
+            Destroy(gameObject);
         }
     }
 }

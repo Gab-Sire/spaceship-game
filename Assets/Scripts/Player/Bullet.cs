@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
     {
         if (collider.CompareTag("enemy") || collider.tag.Contains("wall"))
         {
-            Destroy(gameObject, 0.1f);
+            Destroy(gameObject, 0.01f);
         }
     }
 }

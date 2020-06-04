@@ -126,7 +126,7 @@ public class LevelManager : MonoBehaviour
     public void LoopSkyscrapers()
     {
         Debug.Log("skyscraper destroyed, creating new one");
-        GameObject skyscraper = Instantiate(skyscrapersPrefab, skyscrapers[1].transform.position + new Vector3(rectTransform.rect.width * 4, 0, 0), skyscrapers[1].transform.rotation);
+        GameObject skyscraper = Instantiate(skyscrapersPrefab, skyscrapers[2].transform.position + new Vector3(rectTransform.rect.width * 4 - 3, 0, 0), skyscrapers[2].transform.rotation);
 
         for (int i = 0; i < skyscrapers.Length - 1; i++)
         {
