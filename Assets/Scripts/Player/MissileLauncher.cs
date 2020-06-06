@@ -12,13 +12,15 @@ public class MissileLauncher : MonoBehaviour
 
     void Start()
     {
-        firePoint = GetComponent<Transform>();  
+        firePoint = GetComponent<Transform>();
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(ControlsManager.Inputs["Missile"]))
         {
+            Debug.Log("Input for missile: " + ControlsManager.Inputs["Missile"]);
+
             if (target != null && missile == null)
             {
                 Debug.Log("instantiating missile");

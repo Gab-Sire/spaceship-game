@@ -27,7 +27,6 @@ public class Airplane : MonoBehaviour
     Vector2 screenBounds;
 
     float nextFireTime = 0.0f;
-    float nextMoveTime = 0.0f;
     float height;
     bool isDead = false;
     bool hasSpawned = false;
@@ -146,11 +145,15 @@ public class Airplane : MonoBehaviour
         Instantiate(laserProjectilePrefab, firePoint.transform.position, transform.rotation);
     }
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
-        if (MissileLauncher.target == null)
+        if (Input.GetKeyDown(ControlsManager.Inputs["Missile"]))
         {
-            MissileLauncher.target = transform;
+            if (MissileLauncher.target == null)
+            {
+                MissileLauncher.target = transform;
+            }
         }
+        
     }
 }

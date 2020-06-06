@@ -21,7 +21,7 @@ public class MachineGun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Z))
+        if (Input.GetKey(ControlsManager.Inputs["Fire"]))
         {
             if (Time.time > nextFireTime)
             {
@@ -39,11 +39,11 @@ public class MachineGun : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(ControlsManager.Inputs["MG_Left"]))
         {
             transform.Rotate(0, 0, rotateSpeed);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(ControlsManager.Inputs["MG_Right"]))
         {
             transform.Rotate(0, 0, -rotateSpeed);
         }
